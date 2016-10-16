@@ -7,7 +7,8 @@ var UI,
         lastTypingTime  : null,
         participants    : {}
     },
-    socket;
+    socket,
+    counter = 0;
 
 $(function () {
 
@@ -123,9 +124,10 @@ $(function () {
                                         .data('username',data.username)
                                         .addClass(typingClass)
                                         .append(usernameDiv,messageBodyDiv);
+                counter++;
             }
-            $('.messageRow#buttonWrapper#reportButton').attr('id', function(i) {
-                return 'button'+(i+1);
+            $('.messageRow#buttonWrapper#reportButton').attr('id', function(counter) {
+                return 'button '+(counter+1);
             })
             addMessageElement(messageDiv,options);
         }
