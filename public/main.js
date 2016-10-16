@@ -106,7 +106,7 @@ $(function(){
                                     .addClass('message')
                                     .data('username',data.username)
                                     .addClass(typingClass)
-                                    .append(usernameDiv,messageBodyDiv);
+                                    .append(usernameDiv,messageBodyDiv)
                                 }
             else{
                 var usernameDiv     = $('<span>')
@@ -117,7 +117,8 @@ $(function(){
                                         .addClass('messageBody')
                                         .text(data.message),
                     typingClass     = data.typing ? 'typing' : '',
-                    messageDiv      = $('<li>')
+                    messageDiv      = $('<li text-align="center">')
+                                        .append("<div style='float: right;'> <button style='vertical-align: middle; padding-bottom: 2px;'>Report as chatbot!</button> </div>")
                                         .addClass('message')
                                         .data('username',data.username)
                                         .addClass(typingClass)

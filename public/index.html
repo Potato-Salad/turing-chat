@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
   <ul class="pages">
     <li class="participants page">
       <div id="participants_roll">
@@ -15,7 +18,8 @@
     </li>
     <li class="chat page">
       <div class="chatArea">
-        <ul class="messages"></ul>
+        <ul class="messages">
+        </ul>
       </div>
       <input class="inputMessage" maxlength="200" placeholder="Type a message here..." />
     </li>
@@ -32,9 +36,5 @@
       </div>
     </li>
   </ul>
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/main.js"></script>
 </body>
 </html>
