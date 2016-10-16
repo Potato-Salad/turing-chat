@@ -53,7 +53,7 @@ app.get('/get-users',function(req,res){
     for (var key in io.sockets.adapter.sids ){
         var connectedClient = io.sockets.connected[key],
             returnClient    = {'id':connectedClient.conn.id,'rooms':[],'username':connectedClient.username};
-
+            console.log("Connected client: " + connectedClient);
         for (var room in connectedClient.rooms){
             if (connectedClient.rooms[room] !== returnClient.id)
                 returnClient.rooms.push(connectedClient.rooms[room]);

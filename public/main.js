@@ -9,7 +9,7 @@ var UI,
     },
     socket;
 
-$(function(){
+$(function () {
 
     var FADE_TIME           = 150,
         TYPING_TIMER_LENGTH = 400,
@@ -35,8 +35,8 @@ $(function(){
         UI.currentInput    = UI.usernameInput.focus();
 
         // states how many participants in room
-        function addParticipantMessage(data){
-            doLog('addParticipantMessage',data);
+        function addParticipantMessage(data) {
+            doLog('addParticipantMessage', data);
             var message = '';
 
             message += data.numUsers  + ' participant' + (data.numUsers === 1 ? '' : 's');
@@ -45,37 +45,37 @@ $(function(){
         }
 
         // set the client's username
-        function setUsername(){
+        function setUsername() {
             doLog('setUsername');
             // sanitize username
             chat.username = cleanInput(UI.usernameInput.val().trim());
 
             // if the username is valid
-            if (chat.username){
+            if (chat.username) {
                 // Tell the server your username
-                socket.emit('add user',chat.username);
+                socket.emit('add user', chat.username);
             }
         }
 
         // send chat message
-        function sendMessage(){
+        function sendMessage() {
             doLog('sendMessage');
             // sanitize message
             var message = cleanInput(UI.inputMessage.val());
             // if connected and content in message
-            if (message && chat.connected){
+            if (message && chat.connected) {
                 UI.inputMessage.val('');
                 addChatMessage({
                     username    : chat.username,
                     message     : message
                 });
                 // public mesage
-                socket.emit('new message',message);
+                socket.emit('new message', message);
             }
         }
 
         // log message
-        function log(message,options){
+        function log(message,options) {
             doLog('log',message,options);
             if (chat.connected === true && chat.reconnecting === false){
                 var elem = $('<li>').addClass('log').text(message);
@@ -125,7 +125,7 @@ $(function(){
                                         .append(usernameDiv,messageBodyDiv);
             }
             $('.messageRow#buttonWrapper#reportButton').attr('id', function(i) {
-               return 'button'+(i+1);
+                return 'button'+(i+1);
             })
             addMessageElement(messageDiv,options);
         }
@@ -198,6 +198,9 @@ $(function(){
 
         function createParticipantEntry(name){
             doLog('createParticipantEntry',name);
+            if (name != chat.username) {
+                name = "anonymous";
+            }
             return '<li data-participant="' + name + '">' + name + '</li>';
         }
 
