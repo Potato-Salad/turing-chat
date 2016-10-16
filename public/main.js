@@ -126,7 +126,7 @@ $(function () {
                                         .append(usernameDiv,messageBodyDiv);
                 counter++;
             }
-            $('.messageRow#buttonWrapper#reportButton').attr('id', function(counter) {
+            $('.reportButton').attr('id', function(counter) {
                 return 'button '+(counter+1);
             })
             addMessageElement(messageDiv,options);
