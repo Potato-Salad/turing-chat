@@ -65,8 +65,9 @@ app.get('/get-users',function(req,res){
 
 // Chatroom
 
-// usernames and count
+// usernames userids and count
 var usernames       = {},
+    userids         = {},
     numUsers        = {};
 
 
@@ -79,6 +80,8 @@ io.on('connection',function(socket){
         numUsers[lobby] = 0;
     if (!usernames[lobby])
         usernames[lobby] = {};
+    if (!userids[lobby])
+        userids[lobby] = {};
 
     socket.join(lobby);
 
@@ -103,6 +106,7 @@ io.on('connection',function(socket){
         // add the client's username to the global list
         if(Object.keys(usernames[lobby]).indexOf(username) === -1){
             usernames[lobby][username] = username;
+            userids[lobby][numUsers] = numUsers[lobby];
             ++numUsers[lobby];
             addedUser = true;
             socket.emit('login',{
@@ -133,11 +137,18 @@ io.on('connection',function(socket){
         });
     });
 
+    socket.on('button clicked', function(){
+        socket.broadcast.to(lobby).emit('button clicked',{
+            message:"reported"
+        });
+    });
+
     // when the user disconnects
     socket.on('disconnect', function(){
         // remove the username
         if (addedUser){
             delete usernames[lobby][socket.username];
+            delete userids[lobby][numUsers]
             --numUsers[lobby];
             // echo globally that the client left
             socket.broadcast.to(lobby).emit('user left',{

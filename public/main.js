@@ -117,14 +117,16 @@ $(function(){
                                         .addClass('messageBody')
                                         .text(data.message),
                     typingClass     = data.typing ? 'typing' : '',
-                    messageDiv      = $('<li text-align="center">')
-                                        .append("<div style='float: right;'> <button style='vertical-align: middle; padding-bottom: 2px;'>Report as chatbot!</button> </div>")
+                    messageDiv      = $('<li class="messageRow" text-align="center">')
+                                        .append("<div class='buttonWrapper' style='float: right;'> <button class='reportButton' style='vertical-align: middle; padding-bottom: 2px;'>Report as chatbot!</button> </div>")
                                         .addClass('message')
                                         .data('username',data.username)
                                         .addClass(typingClass)
                                         .append(usernameDiv,messageBodyDiv);
             }
-
+            $('.messageRow#buttonWrapper#reportButton').attr('id', function(i) {
+               return 'button'+(i+1);
+            })
             addMessageElement(messageDiv,options);
         }
 
@@ -295,6 +297,10 @@ $(function(){
                 }
             }
         });
+         // css selector is messed up, needs fixing. Need to handle button clicked event differently
+        $('body > ul > li.chat.page > div > ul > li:nth-child(3) > div > button').click(function(event){
+            socket.emit('button clicked');
+        });
 
         UI.inputMessage.on('input',function(){
             updateTyping();
@@ -407,6 +413,10 @@ $(function(){
 
             socket.on('stop typing',function(data){
                 removeChatTyping(data);
+            });
+
+            socket.on('button clicked',function(data){
+                console.log(data.username + " clicked the button!");
             });
         }
 
